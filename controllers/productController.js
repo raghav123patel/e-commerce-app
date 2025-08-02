@@ -1,10 +1,10 @@
 const Product = require("../models/productModel");
 const imagekit = require("../config/imagekit");
-exports.createProduct = async() => {
+exports.createProduct = async(req,res) => {
     try{
       const {name, description, price, category,stock} = req.body;
       const images = req.file;
-      if(!name || !description || !price || !category || stock || !images){
+      if(!name || !description || !price || !category || stock==undefined || !images){
         return res.status(401).json({
             success: "false",
             message: "provide all the product details",
@@ -21,7 +21,7 @@ exports.createProduct = async() => {
         price,
         category,
         stock,
-        images: upload.url ,
+        images: [upload.url] ,
 
       })
       return res.status(200).json({
